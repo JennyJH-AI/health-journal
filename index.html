@@ -1,284 +1,143 @@
-index.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Journal Chronicle</title>
+    <title>Health Journal - Enhanced</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            margin: 20px;
+            background: #f8f9fa;
         }
-
+        
         .container {
             max-width: 1600px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             overflow: hidden;
         }
-
+        
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: #4a90e2;
             color: white;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
         }
-
+        
         .header h1 {
-            font-size: 2.2em;
+            margin: 0;
             font-weight: 300;
-            margin-bottom: 10px;
         }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .stats-bar {
-            background: #f8f9fa;
-            padding: 20px 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            border-bottom: 1px solid #e1e5e9;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 10px;
-        }
-
-        .stat-number {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #4facfe;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
+        
         .table-container {
-            padding: 30px;
             overflow-x: auto;
+            padding: 20px;
         }
-
-        .journal-table {
+        
+        table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
         }
-
-        .journal-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 10px;
+        
+        th {
+            background: #f1f3f4;
+            padding: 12px 8px;
             text-align: left;
             font-weight: 600;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e1e5e9;
             position: sticky;
             top: 0;
-            z-index: 10;
+            font-size: 0.9em;
         }
-
-        .journal-table td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #f1f3f4;
+        
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e1e5e9;
             vertical-align: top;
             font-size: 0.9em;
         }
-
-        .journal-table tr:hover {
+        
+        tr:hover {
             background: #f8f9ff;
-            transform: scale(1.01);
-            transition: all 0.3s ease;
         }
-
-        .date-col {
-            min-width: 100px;
-            font-weight: 600;
-            color: #4facfe;
-        }
-
-        .day-col {
-            min-width: 60px;
-            text-align: center;
-            font-weight: bold;
-            color: #666;
-        }
-
-        .episode-col {
-            min-width: 80px;
-            text-align: center;
-        }
-
-        .summary-col {
-            min-width: 250px;
-            max-width: 300px;
-            line-height: 1.4;
-        }
-
-        .tags-col {
-            min-width: 200px;
-            max-width: 250px;
-        }
-
-        .temp-col {
-            min-width: 70px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .episode-badge {
+        
+        .date-col { width: 80px; font-weight: 600; color: #4a90e2; }
+        .day-col { width: 50px; text-align: center; font-weight: bold; color: #666; }
+        .time-col { width: 100px; font-size: 0.8em; color: #666; }
+        .summary-col { min-width: 250px; }
+        .symptoms-col { min-width: 200px; }
+        .temp-col { width: 120px; text-align: center; font-weight: bold; }
+        .episode-col { width: 100px; text-align: center; }
+        .raw-col { width: 40px; text-align: center; }
+        
+        .episode-type {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-right: 8px;
         }
-
-        .storm {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
-        }
-
-        .crash {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-
-        .severe-storm {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
+        
+        .storm { background: #fff3cd; color: #856404; }
+        .crash { background: #d1ecf1; color: #0c5460; }
+        .severe-storm { background: #f8d7da; color: #721c24; }
+        
         .symptom-tag {
             display: inline-block;
             background: #e3f2fd;
             color: #1976d2;
-            padding: 3px 8px;
-            margin: 2px;
-            border-radius: 12px;
-            font-size: 0.75em;
-            font-weight: 500;
+            padding: 2px 6px;
+            margin: 1px;
+            border-radius: 8px;
+            font-size: 0.7em;
         }
-
-        .symptom-tag.motor { background: #ffebee; color: #c62828; }
-        .symptom-tag.neuro { background: #e8f5e8; color: #2e7d32; }
-        .symptom-tag.autonomic { background: #fff3e0; color: #ef6c00; }
-        .symptom-tag.sensory { background: #f3e5f5; color: #7b1fa2; }
-        .symptom-tag.physical { background: #e8eaf6; color: #303f9f; }
-
-        .temp-fever {
-            color: #d32f2f;
-            font-weight: bold;
-        }
-
-        .temp-normal {
-            color: #388e3c;
-        }
-
-        .phase-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-        }
-
-        .phase-header td {
-            border: none !important;
-        }
-
-        .legend {
-            margin: 20px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #4facfe;
-        }
-
-        .legend h3 {
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        .legend-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .export-controls {
-            padding: 20px 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e1e5e9;
-            text-align: center;
-        }
-
-        .export-btn {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        
+        .temp-fever { color: #d32f2f; }
+        .temp-normal { color: #388e3c; }
+        
+        .expand-btn {
+            background: #4a90e2;
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
+            padding: 4px 8px;
+            border-radius: 4px;
             cursor: pointer;
-            font-weight: 600;
-            margin: 0 10px;
-            transition: all 0.3s ease;
+            font-size: 0.8em;
         }
-
-        .export-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+        
+        .expand-btn:hover {
+            background: #357abd;
         }
-
-        @media (max-width: 768px) {
-            .stats-bar {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            
-            .journal-table {
-                font-size: 0.8em;
-            }
-            
-            .journal-table th,
-            .journal-table td {
-                padding: 8px 6px;
-            }
+        
+        .raw-entry {
+            display: none;
+            background: #f8f9fa;
+            padding: 10px;
+            margin-top: 8px;
+            border-left: 3px solid #4a90e2;
+            font-style: italic;
+            color: #555;
+            border-radius: 4px;
+        }
+        
+        .raw-entry.expanded {
+            display: block;
+        }
+        
+        .time-list {
+            font-size: 0.75em;
+            line-height: 1.2;
+        }
+        
+        .temp-reading {
+            display: block;
+            font-size: 0.8em;
+            margin: 1px 0;
         }
     </style>
 </head>
@@ -286,488 +145,69 @@ index.html
     <div class="container">
         <div class="header">
             <h1>Health Journal Chronicle</h1>
-            <p>Post-Viral Syndrome Timeline: November 2019 - March 2020</p>
+            <p>Complete Timeline with Raw Journal Entries</p>
         </div>
-
-        <div class="stats-bar">
-            <div class="stat-item">
-                <div class="stat-number">21</div>
-                <div class="stat-label">Episodes</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">119</div>
-                <div class="stat-label">Days Tracked</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">25</div>
-                <div class="stat-label">Unique Symptoms</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">99.97°F</div>
-                <div class="stat-label">Avg Temperature</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">4.1</div>
-                <div class="stat-label">Avg Symptoms/Episode</div>
-            </div>
-        </div>
-
+        
         <div class="table-container">
-            <table class="journal-table" id="journalTable">
+            <table>
                 <thead>
                     <tr>
                         <th class="date-col">Date</th>
                         <th class="day-col">Day #</th>
-                        <th class="episode-col">Episode</th>
+                        <th class="time-col">Times</th>
                         <th class="summary-col">Summary</th>
-                        <th class="tags-col">Symptom Tags</th>
-                        <th class="temp-col">Temp °F</th>
+                        <th class="symptoms-col">Symptoms</th>
+                        <th class="temp-col">Temperature</th>
+                        <th class="raw-col">📝</th>
+                        <th class="episode-col">Episode</th>
                     </tr>
                 </thead>
-                <tbody id="journalTableBody">
-                    <!-- Table content will be populated by JavaScript -->
+                <tbody id="journalData">
+                    <!-- Data will be populated by JavaScript -->
                 </tbody>
             </table>
-        </div>
-
-        <div class="legend">
-            <h3>Legend</h3>
-            <div class="legend-grid">
-                <div class="legend-item">
-                    <span class="episode-badge storm">STORM</span>
-                    <span>Major multi-system episode</span>
-                </div>
-                <div class="legend-item">
-                    <span class="episode-badge crash">CRASH</span>
-                    <span>Severe fatigue/weakness episode</span>
-                </div>
-                <div class="legend-item">
-                    <span class="episode-badge severe-storm">SEVERE STORM</span>
-                    <span>Life-threatening crisis</span>
-                </div>
-                <div class="legend-item">
-                    <span class="symptom-tag motor">MOTOR</span>
-                    <span>Movement/Motor symptoms</span>
-                </div>
-                <div class="legend-item">
-                    <span class="symptom-tag neuro">NEURO</span>
-                    <span>Neurological/Cognitive</span>
-                </div>
-                <div class="legend-item">
-                    <span class="symptom-tag autonomic">AUTONOMIC</span>
-                    <span>Autonomic/Cardiovascular</span>
-                </div>
-                <div class="legend-item">
-                    <span class="symptom-tag sensory">SENSORY</span>
-                    <span>Sensory/Cranial nerve</span>
-                </div>
-                <div class="legend-item">
-                    <span class="symptom-tag physical">PHYSICAL</span>
-                    <span>Physical/Systemic</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="export-controls">
-            <button class="export-btn" onclick="exportToCSV()">Export CSV</button>
-            <button class="export-btn" onclick="exportToJSON()">Export JSON</button>
-            <button class="export-btn" onclick="window.print()">Print Table</button>
         </div>
     </div>
 
     <script>
-        // Journal data with detailed episodes
-        const journalData = [
+        // Symptom abbreviation mapping
+        const symptomMap = {
+            'SYSTEMIC-SHAKE': 'Whole Body Shaking',
+            'TREMOR': 'Fine Localized Tremors',
+            'MOTOR-WEAK': 'Muscle Weakness/Failure',
+            'MR': 'Motor Restlessness',
+            'PRE-SYNCOPE': 'About to Faint Feeling',
+            'BALANCE': 'Balance/Proprioceptive Issues',
+            'CD': 'Cognitive Issues/Brain Fog',
+            'MIG': 'Migraine/Head Pain',
+            'NP': 'Nerve Pain (Burning/Shooting)',
+            'PT': 'Heart Palpitations/Tachycardia',
+            'TD': 'Temperature Dysregulation',
+            'ID': 'Impending Doom Sensation',
+            'PHOTOPHOBIA': 'Light Sensitivity',
+            'PHONOPHOBIA': 'Sound Sensitivity',
+            'DYSGEUSIA': 'Taste Changes/Sensitivity',
+            'DYSPHONIA': 'Voice Changes',
+            'DYS': 'Swallowing Difficulties',
+            'PAIN': 'General Body Pain',
+            'RESP': 'Respiratory Issues',
+            'FAT': 'Fatigue/Energy Depletion',
+            'INSOMNIA': 'Sleep Problems',
+            'GI': 'Gastrointestinal Symptoms',
+            'RASH': 'Skin Manifestations',
+            'TING': 'Tingling Sensations',
+            'NUMB': 'Numbness',
+            'NAUSEA': 'Nausea',
+            'NC': 'Neurogenic Crying'
+        };
+
+        // Enhanced journal entries with raw data
+        const journalEntries = [
             {
                 date: '2019-11-10',
                 day: 0,
-                episode: '',
-                summary: 'Disease onset - First migraine (no prior migraine history)',
-                tags: ['MIG'],
-                temp: null,
-                notes: 'Sudden onset severe headache, base of skull radiating forward'
-            },
-            {
-                date: '2019-11-14',
-                day: 4,
-                episode: 'STORM',
-                summary: 'First storm - Work crisis with neurological symptoms',
-                tags: ['MIG', 'BALANCE', 'PRE-SYNCOPE', 'NAUSEA', 'PHOTOPHOBIA'],
-                temp: null,
-                notes: 'Nausea, light sensitivity, dizziness, driving difficulty'
-            },
-            {
-                date: '2019-11-15',
-                day: 5,
-                episode: 'STORM',
-                summary: 'Fever confirmed, respiratory involvement',
-                tags: ['RESP'],
-                temp: 99.4,
-                notes: 'Out of breath, fever documented'
-            },
-            {
-                date: '2019-11-16',
-                day: 6,
-                episode: 'CRASH',
-                summary: 'First neurogenic crying, sound sensitivity',
-                tags: ['NC', 'PHONOPHOBIA'],
-                temp: null,
-                notes: 'Emotional dysregulation, sound intolerance'
-            },
-            {
-                date: '2019-11-21',
-                day: 11,
-                episode: 'STORM',
-                summary: 'Violent shaking at walk-in, too weak to drive',
-                tags: ['SYSTEMIC-SHAKE', 'NC', 'RESP', 'FAT', 'MOTOR-WEAK', 'TD'],
-                temp: 99.7,
-                notes: 'Walk-in clinic visit, systemic shaking, temperature dysregulation'
-            },
-            {
-                date: '2019-11-22',
-                day: 12,
-                episode: 'STORM',
-                summary: 'Dark room needed, throbbing headache',
-                tags: ['MIG'],
-                temp: null,
-                notes: 'Severe photophobia, migraine management'
-            },
-            {
-                date: '2019-11-26',
-                day: 16,
-                episode: 'CRASH',
-                summary: 'Desperate weakness',
-                tags: ['MOTOR-WEAK'],
-                temp: 99.8,
-                notes: 'Extreme fatigue and motor weakness'
-            },
-            {
-                date: '2019-11-28',
-                day: 18,
-                episode: 'STORM',
-                summary: 'Extreme back pain, taste sensitivity, insomnia onset',
-                tags: ['NP', 'DYSGEUSIA', 'INSOMNIA'],
-                temp: null,
-                notes: 'Neurogenic pain, taste changes, sleep disruption begins'
-            },
-            {
-                date: '2019-12-02',
-                day: 22,
-                episode: '',
-                summary: 'Voice changes begin',
-                tags: ['DYSPHONIA'],
-                temp: null,
-                notes: 'First documentation of voice alterations'
-            },
-            {
-                date: '2019-12-04',
-                day: 24,
-                episode: '',
-                summary: 'Tachycardia documented - EKG 130 walking/90s resting',
-                tags: ['PT'],
-                temp: null,
-                notes: 'Cardiac autonomic dysfunction confirmed'
-            },
-            {
-                date: '2019-12-06',
-                day: 26,
-                episode: 'SEVERE STORM',
-                summary: 'Major crisis - Echo appointment triggered systemic shake, fetal position, ER visit',
-                tags: ['SYSTEMIC-SHAKE', 'NC', 'DYS', 'ID', 'PRE-SYNCOPE'],
-                temp: 100.3,
-                notes: 'Life-threatening episode, swallowing difficulty, impending doom sensation'
-            },
-            {
-                date: '2019-12-15',
-                day: 35,
-                episode: '',
-                summary: 'First GI crisis - stomach pain, loose stool',
-                tags: ['GI', 'NP', 'PAIN'],
-                temp: null,
-                notes: 'Gastrointestinal involvement begins'
-            },
-            {
-                date: '2019-12-16',
-                day: 36,
-                episode: '',
-                summary: 'First motor restlessness - couldn\'t stop moving',
-                tags: ['MR', 'NP', 'MIG'],
-                temp: 99.0,
-                notes: 'Motor restlessness, akathisia-like symptoms'
-            },
-            {
-                date: '2019-12-28',
-                day: 48,
-                episode: 'CRASH',
-                summary: 'Drenched sweats, faint, extremely out of it',
-                tags: ['TD', 'PRE-SYNCOPE', 'CD', 'GI'],
-                temp: 99.9,
-                notes: 'Temperature dysregulation, cognitive dysfunction'
-            },
-            {
-                date: '2019-12-31',
-                day: 52,
-                episode: 'STORM',
-                summary: 'Light/sound sensitivity increasing, systemic shaking',
-                tags: ['TREMOR', 'MIG', 'SYSTEMIC-SHAKE', 'MOTOR-WEAK'],
-                temp: 100.8,
-                notes: 'New Year\'s Eve crisis, highest documented temperature'
-            },
-            {
-                date: '2020-01-02',
-                day: 54,
-                episode: '',
-                summary: 'Hard time lifting legs, turning impossible',
-                tags: ['PAIN', 'BALANCE', 'MOTOR-WEAK', 'MIG'],
-                temp: 99.4,
-                notes: 'Professional dancer unable to perform basic movements'
-            },
-            {
-                date: '2020-01-07',
-                day: 59,
-                episode: 'STORM',
-                summary: 'Feeling a downfall - major episode with fetal position shaking',
-                tags: ['PAIN', 'FAT', 'RESP', 'TREMOR', 'SYSTEMIC-SHAKE', 'MOTOR-WEAK', 'MIG'],
-                temp: 100.0,
-                notes: 'Most complex episode - 7 simultaneous symptoms'
-            },
-            {
-                date: '2020-01-15',
-                day: 67,
-                episode: '',
-                summary: 'Balance noted as "wonky" - increasing from weeks prior',
-                tags: ['BALANCE'],
-                temp: null,
-                notes: 'Progressive proprioceptive dysfunction'
-            },
-            {
-                date: '2020-01-16',
-                day: 68,
-                episode: 'CRASH',
-                summary: 'Kitchen collapse to all fours, heart rate spike',
-                tags: ['PRE-SYNCOPE', 'PT', 'MOTOR-WEAK'],
-                temp: null,
-                notes: 'Sudden cardiovascular and motor collapse'
-            },
-            {
-                date: '2020-01-19',
-                day: 71,
-                episode: 'STORM',
-                summary: 'Quick movement triggered instant wooziness, face-first into mattress',
-                tags: ['Pre-syncope', 'Balance disruption', 'Motor weakness', 'Migraine'],
-                temp: 99.7,
-                notes: 'Temperature range 99.7-100.2°F, movement-triggered symptoms'
-            },
-            {
-                date: '2020-02-04',
-                day: 86,
-                episode: 'SEVERE STORM',
-                summary: 'Different/scary spell - suspended feeling, chest tight, lips tingling',
-                tags: ['Pre-syncope', 'Pain', 'Respiratory distress', 'Tingling', 'Impending doom', 'Tachycardia', 'Motor weakness'],
-                temp: null,
-                notes: 'Couldn\'t sit or walk, most frightening episode to date'
-            },
-            {
-                date: '2020-02-06',
-                day: 88,  
-                episode: 'STORM',
-                summary: 'First tingling/rash - 3 spells, tingling climbed up leg, rash under armpit',
-                tags: ['Tingling', 'Rash', 'Pre-syncope'],
-                temp: 100.1,
-                notes: 'New symptom category - peripheral nerve involvement begins'
-            },
-            {
-                date: '2020-02-16',
-                day: 98,
-                episode: 'CRASH',
-                summary: 'First numbness - sudden numbness right pinky',
-                tags: ['Numbness', 'Tremor', 'Pain', 'Migraine'],
-                temp: 99.7,
-                notes: 'Peripheral nerve symptoms continue to emerge'
-            },
-            {
-                date: '2020-02-25',
-                day: 107,
-                episode: 'STORM',
-                summary: 'Brain fog episode, unable to articulate at 2am',
-                tags: ['Pain', 'Balance disruption', 'Cognitive dysfunction', 'Insomnia', 'Migraine', 'Nerve pain'],
-                temp: null,
-                notes: 'Severe cognitive impairment, communication difficulties'
-            },
-            {
-                date: '2020-03-02',
-                day: 113,
-                episode: 'STORM',
-                summary: 'Major decline - faint, rapid heart, difficulty swallowing increased',
-                tags: ['Pre-syncope', 'Tachycardia', 'Pain', 'Respiratory distress', 'Swallowing difficulty', 'Migraine'],
-                temp: null,
-                notes: 'Multi-system deterioration'
-            },
-            {
-                date: '2020-03-03',
-                day: 114,
-                episode: 'STORM',
-                summary: 'Irregular heartbeat, couldn\'t work',
-                tags: ['Tachycardia', 'Fatigue', 'Temperature dysregulation', 'Pain', 'Migraine'],
-                temp: null,
-                notes: 'Cardiac arrhythmias, work disability'
-            },
-            {
-                date: '2020-03-07',
-                day: 118,
-                episode: 'STORM',
-                summary: 'Horrible travel day - numbness/pain/tingling for hours, extreme headache',
-                tags: ['Numbness', 'Nerve pain', 'Tingling', 'Pain', 'Migraine'],
-                temp: null,
-                notes: 'Travel-triggered severe episode'
-            },
-            {
-                date: '2020-03-12',
-                day: 123,
-                episode: 'SEVERE STORM',
-                summary: 'ER visit - horrible headache unresponsive to treatment',
-                tags: ['Pain', 'Migraine', 'Pre-syncope', 'Motor weakness'],
-                temp: null,
-                notes: 'Mayo Clinic ER visit, refractory headache'
-            }
-        ];
-
-        // Symptom category mapping for color coding
-        const symptomCategories = {
-            'Migraine': 'neuro',
-            'Balance disruption': 'neuro', 
-            'Pre-syncope': 'neuro',
-            'Nausea': 'physical',
-            'Light sensitivity': 'sensory',
-            'Respiratory distress': 'physical',
-            'Neurogenic crying': 'neuro',
-            'Sound sensitivity': 'sensory',
-            'Systemic shaking': 'motor',
-            'Fatigue': 'physical',
-            'Motor weakness': 'motor',
-            'Temperature dysregulation': 'autonomic',
-            'Nerve pain': 'neuro',
-            'Taste sensitivity': 'sensory',
-            'Insomnia': 'physical',
-            'Voice changes': 'sensory',
-            'Tachycardia': 'autonomic',
-            'Swallowing difficulty': 'sensory',
-            'Impending doom': 'autonomic',
-            'GI crisis': 'physical',
-            'Motor restlessness': 'motor',
-            'Cognitive dysfunction': 'neuro',
-            'Tremor': 'motor',
-            'Pain': 'physical',
-            'Tingling': 'physical',
-            'Rash': 'physical',
-            'Numbness': 'physical'
-        };
-
-        // Function to get symptom category class
-        function getSymptomCategory(symptom) {
-            return symptomCategories[symptom] || 'physical';
-        }
-
-        // Function to render the table
-        function renderTable() {
-            const tbody = document.getElementById('journalTableBody');
-            tbody.innerHTML = '';
-
-            // Add phase headers
-            let currentPhase = '';
-            
-            journalData.forEach((entry, index) => {
-                // Determine phase
-                let phase = '';
-                if (entry.day <= 7) phase = 'Early Phase (Days 0-7): Hyperacute Neurological Cascade';
-                else if (entry.day <= 30) phase = 'Acute Phase (Days 8-30): System Recruitment';
-                else if (entry.day <= 87) phase = 'Transition Phase (Days 31-87): Adaptation Period';
-                else phase = 'Late Phase (Days 88+): Peripheral Manifestation';
-
-                // Add phase header if changed
-                if (phase !== currentPhase) {
-                    const phaseRow = document.createElement('tr');
-                    phaseRow.className = 'phase-header';
-                    phaseRow.innerHTML = `<td colspan="6" class="phase-header">${phase}</td>`;
-                    tbody.appendChild(phaseRow);
-                    currentPhase = phase;
-                }
-
-                // Create data row
-                const row = document.createElement('tr');
-                
-                // Format date
-                const date = new Date(entry.date);
-                const formattedDate = date.toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    day: 'numeric',
-                    year: '2-digit'
-                });
-
-                // Create symptom tags HTML
-                const symptomTagsHtml = entry.tags.map(tag => 
-                    `<span class="symptom-tag ${getSymptomCategory(tag)}">${tag}</span>`
-                ).join('');
-
-                // Episode badge
-                const episodeBadge = entry.episode ? 
-                    `<span class="episode-badge ${entry.episode.toLowerCase().replace(' ', '-')}">${entry.episode}</span>` : 
-                    '';
-
-                // Temperature display
-                const tempDisplay = entry.temp ? 
-                    `<span class="temp-fever">${entry.temp}°F</span>` : 
-                    '<span style="color: #999;">--</span>';
-
-                row.innerHTML = `
-                    <td class="date-col">${formattedDate}</td>
-                    <td class="day-col">${entry.day}</td>
-                    <td class="episode-col">${episodeBadge}</td>
-                    <td class="summary-col">${entry.summary}</td>
-                    <td class="tags-col">${symptomTagsHtml}</td>
-                    <td class="temp-col">${tempDisplay}</td>
-                `;
-
-                tbody.appendChild(row);
-            });
-        }
-
-        // Export functions
-        function exportToCSV() {
-            const headers = ['Date', 'Day', 'Episode Type', 'Summary', 'Symptoms', 'Temperature'];
-            const csvContent = [
-                headers.join(','),
-                ...journalData.map(entry => [
-                    entry.date,
-                    entry.day,
-                    entry.episode || '',
-                    `"${entry.summary}"`,
-                    `"${entry.tags.join('; ')}"`,
-                    entry.temp || ''
-                ].join(','))
-            ].join('\n');
-
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `health-journal-${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function exportToJSON() {
-            const jsonContent = JSON.stringify(journalData, null, 2);
-            const blob = new Blob([jsonContent], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `health-journal-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // Initialize table on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            renderTable();
-        });
+                times: [],
+                summary: 'First migraine (no prior migraine history)',
+                symptoms: ['MIG', 'PAIN'],
+                temps: [],
+                episode:
